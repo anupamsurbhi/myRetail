@@ -17,3 +17,35 @@ Swagger UI for - Exploring the Endpoints
 
 PostMan collection - https://www.getpostman.com/collections/819daea7480a8f605a9d
 
+### RestFul APIs end point 
+
+##Get Method  - http://localhost:8080/product/13860428
+
+Response Json - 
+{
+    "id": 13860428,
+    "name": "The Big Lebowski (Blu-ray)",
+    "current_price": {
+        "value": 44646.32,
+        "currency_code": "USD"
+    }
+}
+
+
+##Put Method  - http://localhost:8080/product/1386042
+
+request
+Body 
+{
+  "currencyCode": "USD",
+  "currentPrice": 1002.32
+}
+
+Response Body
+{
+    "id": 1386042,
+    "current_price": {
+        "value": 44646.32,
+        "currency_code": "USD"
+    }
+}
