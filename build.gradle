@@ -1,0 +1,40 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.6.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'org.target.myretail'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+	// added new features//
+    compile("org.springframework.boot:spring-boot-devtools")
+	compileOnly 'org.projectlombok:lombok:1.18.8'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'
+	compile group: 'cz.jirutka.spring', name: 'embedmongo-spring', version: '1.1'
+	compile ("io.springfox:springfox-swagger-ui:2.5.0")
+    compile ("io.springfox:springfox-swagger2:2.5.0")
+    compile group: 'com.fasterxml.jackson.dataformat' , name: 'jackson-dataformat-xml' , version : '2.6.3'
+    compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0'
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    compile group: 'org.json', name: 'json', version: '20090211'
+	//compile group: 'org.hibernate', name: 'hibernate-validator', version: '4.2.0.Final'
+	compile group: 'javax.persistence', name: 'persistence-api', version: '1.0'
+	
+    
+}
