@@ -10,8 +10,24 @@ group = 'org.target.myretail'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'My Retail Jar',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'package org.target.myretail.myRetail'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 repositories {
 	mavenCentral()
+}
+
+configurations {
+    all*.exclude module : 'spring-boot-starter-logging'
 }
 
 dependencies {

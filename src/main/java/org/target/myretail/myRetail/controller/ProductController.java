@@ -20,6 +20,7 @@ import org.target.myretail.myRetail.model.Product;
 import org.target.myretail.myRetail.request.ProductRequest;
 import org.target.myretail.myRetail.response.ProductResponse;
 import org.target.myretail.myRetail.service.impl.ProductServiceImpl;
+import org.target.myretail.myRetail.validator.RequestValidator;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -35,11 +36,14 @@ public class ProductController {
 	ProductResponse productResponse;
 
 	@Autowired
+	RequestValidator requestValidator;
+
+	@Autowired
 	ProductServiceImpl productService;
 
 	@ApiOperation(value = "get the product info")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ProductResponse> getProductDetail(@PathVariable @Min(2) Integer id)
+	public ResponseEntity<ProductResponse> getProductDetail(@PathVariable @Min(1000) Integer id)
 			throws InvalidClassException, JSONException, DataNotFoundException, ResourceNotFoundException {
 		ResponseEntity<ProductResponse> result;
 		productResponse = productService.getById(id.toString());
@@ -50,13 +54,18 @@ public class ProductController {
 
 	@ApiOperation(value = "update price")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ProductResponse> updatePrice(@PathVariable @Min(2) Integer id,  @RequestBody  ProductRequest productReq)
-			throws InvalidClassException {
+	public ResponseEntity<ProductResponse> updatePrice(@PathVariable @Min(1000) Integer id,
+			@RequestBody ProductRequest productReq) throws InvalidClassException {
+		ResponseEntity<ProductResponse> response = requestValidator.CheckInput(id, productReq.getCurrencyCode(),
+				productReq.getCurrentPrice());
+		if (response.getStatusCode() == HttpStatus.CREATED) {
+			product.setCurrentPrice(productReq.getCurrentPrice());
+			product.setCurrencyCode(productReq.getCurrencyCode());
+			product.setId(id);
+			productService.saveOrUpdate(product);
+		}
+		return response;
 
-		product.setCurrentPrice(productReq.getCurrentPrice());
-		product.setCurrencyCode(productReq.getCurrencyCode());
-		product.setId(id);
-		return new ResponseEntity<ProductResponse>(productService.saveOrUpdate(product), null, HttpStatus.CREATED); 
 	}
 
 }

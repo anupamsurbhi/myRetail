@@ -28,10 +28,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	Product product;
-	
+
 	@Autowired
 	ProductResponse productResponse;
-	
+
 	@Autowired
 	PriceInfo priceInfo;
 
@@ -41,25 +41,20 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	MyRetailGateway myRetailGateway;
 
-    @Autowired
-    private MessageSource messageSource;
+	@Autowired
+	private MessageSource messageSource;
 
-    
 	@Override
-	public ProductResponse getById(String id) throws JSONException, DataNotFoundException , ResourceNotFoundException{
+	public ProductResponse getById(String id) throws JSONException, DataNotFoundException, ResourceNotFoundException {
 		try {
 			product = productRepository.findById(Integer.valueOf(id));
-			if (product == null)
-			{
+			if (product == null) {
 				throw new DataNotFoundException();
 			}
 			productResponse.setName(myRetailGateway.getDetail(id));
-		}
-		catch (ResourceNotFoundException e)
-		{
+		} catch (ResourceNotFoundException e) {
 			throw new ResourceNotFoundException();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new DataNotFoundException();
 		}
 		return productResponse;
@@ -68,16 +63,15 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductResponse saveOrUpdate(Product product) {
 		try {
-		productRepository.save(product);
-		}
-		catch (Exception e)
-		{
+			productRepository.save(product);
+		} catch (Exception e) {
 			System.out.println("----" + e);
 		}
 		priceInfo.setCurrencyCode(product.getCurrencyCode());
 		priceInfo.setValue(product.getCurrentPrice());
 		productResponse.setCurrent_price(priceInfo);
 		productResponse.setId(product.getId());
+		productResponse.setName(null);
 		return productResponse;
 	}
 
