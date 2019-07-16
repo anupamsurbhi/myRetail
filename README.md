@@ -13,7 +13,7 @@ Junit for test cases
 
 Lombok For Data/Getter/Setters
 
-Swagger UI for - Exploring the Endpoints
+Swagger UI for - Exploring the Endpoints - http://localhost:8181/swagger-ui.html#/
 
 PostMan collection - https://www.getpostman.com/collections/819daea7480a8f605a9d
 
@@ -54,6 +54,15 @@ Response Body
 ## Validations
 
 if id < 1000 -> Http code return 500
+
 if currency code is not USD and price is less then zero - Http code return 400
-if  
+
+In order to get the success response data should be return from NOSQL DB (Price) and Product API ( Item Description)
+
+
+##Troubleshooting -
+
+This is a gradle project and can be build using "gradle build" command
+
+Lombok needs to be installed in eclipse or intellJ
 
