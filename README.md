@@ -49,3 +49,11 @@ Response Body
         "currency_code": "USD"
     }
 }
+
+
+## Validations
+
+if id < 1000 -> Http code return 500
+if currency code is not USD and price is less then zero - Http code return 400
+if  
+

@@ -16,7 +16,7 @@ public class RequestValidator {
 	Product product;
 
 	@Autowired
-	ProductResponse productResponse;
+	ProductResponse productResponse ;
 
 	@Autowired
 	PriceInfo priceInfo;
@@ -24,10 +24,13 @@ public class RequestValidator {
 	@Autowired
 	MyRetailError error;
 	
+	
+	
 
 	public ResponseEntity<ProductResponse> CheckInput(Integer item, String currency, Double value) {
 		HttpStatus status;
-		if (currency != "USD" || value <= 0) {
+		productResponse = new ProductResponse();
+		if (!currency.equals("USD") || value <= 0.0) {
 			error.setMessage(("Currency shhould be USD and price should be greater then zero"));
 			productResponse.setError(error);
 			status = HttpStatus.BAD_REQUEST;

@@ -6,12 +6,15 @@ import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.annotation.JsonRootName;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @Component
 @JsonRootName(value = "ProductRequest")
 public class ProductRequest {
+	
 	
    	private Double currentPrice;
 

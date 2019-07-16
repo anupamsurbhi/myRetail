@@ -16,8 +16,10 @@ import org.target.myretail.myRetail.response.ProductResponse;
 import org.target.myretail.myRetail.service.ProductService;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
@@ -53,10 +55,16 @@ public class ProductServiceImpl implements ProductService {
 			}
 			productResponse.setName(myRetailGateway.getDetail(id));
 		} catch (ResourceNotFoundException e) {
+			log.error("Create resource not found - Unable to get product description");
 			throw new ResourceNotFoundException();
-		} catch (Exception e) {
+		} catch (DataNotFoundException e) {
+			log.error("Create Data not found exception");
 			throw new DataNotFoundException();
+		} catch (Exception e) {
+			log.error("exception" + e);
+
 		}
+
 		return productResponse;
 	}
 
@@ -65,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			productRepository.save(product);
 		} catch (Exception e) {
-			System.out.println("----" + e);
+			log.error("Unable to Update/Insert into Mongo DB");
 		}
 		priceInfo.setCurrencyCode(product.getCurrencyCode());
 		priceInfo.setValue(product.getCurrentPrice());
